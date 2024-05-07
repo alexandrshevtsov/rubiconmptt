@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using RubiconMp.IntegrationTests.Utility.Fixtures;
+using RubiconMp.Web;
 
 namespace RubiconMp.IntegrationTests.Utility
 {
@@ -20,27 +20,10 @@ namespace RubiconMp.IntegrationTests.Utility
         {
             builder.ConfigureServices(services =>
             {
-                //// Register the contexts
-                //var existingDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<PostgresContext>));
-                //if (existingDescriptor != null)
-                //{
-                //    services.Remove(existingDescriptor);
-                //}
-                //services.AddDbContext<PostgresContext>(options =>
-                //    options.UseNpgsql(_postgreSqlFixture.ConnectionString),
-                //    ServiceLifetime.Transient
-                //);
-
-                //// Register the contexts
-                //_postgreSqlFixture.AddDbContext(services);
-                //_sqlServerFixture.AddDbContext(services);
-
-                // Add any other necessary service configurations
-
-                // Build the service provider
                 var serviceProvider = services.BuildServiceProvider();
 
-                // Set the service provider of the WebApplicationFactory
+                _sqlServerFixture.AddDbContext(services);
+
                 builder.UseSetting(WebHostDefaults.ApplicationKey, typeof(Program).Assembly.FullName)
                        .UseDefaultServiceProvider(options => options.ValidateScopes = true)
                        .ConfigureServices(s => s.AddSingleton(serviceProvider));

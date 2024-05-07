@@ -28,13 +28,22 @@ namespace RubiconMp.IntegrationTests.Utility.Fixtures
 
             var services = new ServiceCollection();
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(ConnectionString),
+                options.UseSqlServer(ConnectionString, b => b.UseNetTopologySuite()),
                 ServiceLifetime.Transient
             );
 
             var serviceProvider = services.BuildServiceProvider();
 
             DbContextOptions = serviceProvider.GetRequiredService<DbContextOptions<ApplicationContext>>();
+        }
+
+        public IServiceCollection AddDbContext(IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(ConnectionString, b => b.UseNetTopologySuite()),
+                ServiceLifetime.Transient
+            );
+            return services;
         }
     }
 }

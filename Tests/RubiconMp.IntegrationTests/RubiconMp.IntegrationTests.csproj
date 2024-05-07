@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RubiconMp.Core\RubiconMp.Core.csproj" />
+    <ProjectReference Include="..\..\RubiconMp.Data\RubiconMp.Data.csproj" />
+    <ProjectReference Include="..\..\RubiconMp.Domain\RubiconMp.Domain.csproj" />
+    <ProjectReference Include="..\..\RubiconMp.Services\RubiconMp.Services.csproj" />
     <ProjectReference Include="..\..\RubiconMp.Web\RubiconMp.Web.csproj" />
   </ItemGroup>
 

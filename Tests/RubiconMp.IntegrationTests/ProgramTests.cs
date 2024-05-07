@@ -1,16 +1,17 @@
 using RubiconMp.IntegrationTests.Utility;
+using RubiconMp.IntegrationTests.Utility.Fixtures;
 
 namespace RubiconMp.IntegrationTests
 {
-    public class ProgramTests : IClassFixture<CustomWebApplicationFactory>
+    public class ProgramTests : IClassFixture<CustomWebApplicationFactory>, IClassFixture<SqlServerFixture>
     {
         private readonly CustomWebApplicationFactory _factory;
-        //private readonly PostgreSqlFixture _postgreSqlFixture;
+        private readonly SqlServerFixture _sqlServerFixture;
 
-        public ProgramTests(CustomWebApplicationFactory factory /*, PostgreSqlFixture postgreSqlFixture*/)
+        public ProgramTests(CustomWebApplicationFactory factory, SqlServerFixture sqlServerFixture)
         {
             _factory = factory;
-            //_postgreSqlFixture = postgreSqlFixture;
+            _sqlServerFixture = sqlServerFixture;
         }
 
         [Theory]
@@ -26,7 +27,7 @@ namespace RubiconMp.IntegrationTests
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("application/json; charset=utf-8", response?.Content?.Headers?.ContentType?.ToString());
-            //Assert.NotEmpty(_postgreSqlFixture.ConnectionString);
+            Assert.NotEmpty(_sqlServerFixture.ConnectionString);
         }
     }
 }
