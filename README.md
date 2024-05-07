@@ -1,4 +1,4 @@
-# Test tas for .Net Developer position
+# Test task for .Net Developer position
 
 to run it in containers run 
 ```sh
