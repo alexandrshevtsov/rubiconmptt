@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: RubiconMp.Web/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Server=mssql;Database=RubiconMp;uid=sa;pwd=P@55w0rd;MultipleActiveResultSets=true;TrustServerCertificate=true
+    ports:
+      - 5000:8080
+    links:
+      - mssql
+    depends_on:
+      - mssql
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "P@55w0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql:/var/opt/mssql
+volumes:
+  mssql:
+    driver: local
